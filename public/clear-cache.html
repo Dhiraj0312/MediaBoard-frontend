@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Cache - Digital Signage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .danger {
+            background: #dc3545;
+        }
+        .danger:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Clear Cache - Digital Signage Platform</h1>
+        
+        <div class="warning">
+            <strong>⚠️ Important:</strong> If you're experiencing rate limiting issues (429 errors), 
+            this page will help clear any cached polling sessions that might be making excessive requests.
+        </div>
+
+        <div class="success" id="success">
+            <strong>✅ Success:</strong> Cache cleared! Please close all browser tabs and reopen the application.
+        </div>
+
+        <h3>Step 1: Clear Browser Cache</h3>
+        <p>Click the button below to clear localStorage and sessionStorage:</p>
+        <button onclick="clearStorage()">Clear Storage</button>
+
+        <h3>Step 2: Clear Browser Cache Manually</h3>
+        <p>Press the following key combination for your browser:</p>
+        <ul>
+            <li><strong>Chrome/Edge:</strong> Ctrl+Shift+Delete (Windows) or Cmd+Shift+Delete (Mac)</li>
+            <li><strong>Firefox:</strong> Ctrl+Shift+Delete (Windows) or Cmd+Shift+Delete (Mac)</li>
+            <li><strong>Safari:</strong> Cmd+Option+E (Mac)</li>
+        </ul>
+
+        <h3>Step 3: Force Refresh</h3>
+        <p>After clearing cache, force refresh the main application:</p>
+        <ul>
+            <li><strong>Windows:</strong> Ctrl+F5 or Ctrl+Shift+R</li>
+            <li><strong>Mac:</strong> Cmd+Shift+R</li>
+        </ul>
+
+        <h3>Emergency: Stop All Polling</h3>
+        <p>If issues persist, you can temporarily disable all polling:</p>
+        <button class="danger" onclick="disablePolling()">Emergency: Disable All Polling</button>
+        
+        <h3>Server Cache: Clear Rate Limits</h3>
+        <p>Clear the server-side rate limiting cache:</p>
+        <button onclick="testBackendConnection()">Test Backend Connection</button>
+        <button onclick="clearServerCache()">Clear Server Rate Limit Cache</button>
+        
+        <p><small>This will clear the server's rate limiting memory and allow normal requests again.</small></p>
+        
+        <div id="connectionStatus" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;"></div>
+
+        <hr>
+        <h3>Current Status</h3>
+        <p id="status">Checking polling status...</p>
+    </div>
+
+    <script>
+        function clearStorage() {
+            try {
+                // Clear all storage
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                // Clear any polling-related items specifically
+                const pollingKeys = Object.keys(localStorage).filter(key => 
+                    key.includes('polling') || key.includes('dashboard') || key.includes('cache')
+                );
+                pollingKeys.forEach(key => localStorage.removeItem(key));
+                
+                document.getElementById('success').style.display = 'block';
+                updateStatus();
+            } catch (error) {
+                alert('Error clearing storage: ' + error.message);
+            }
+        }
+
+        function disablePolling() {
+            if (confirm('This will disable all polling until you manually re-enable it. Continue?')) {
+                localStorage.setItem('DISABLE_POLLING', 'true');
+                localStorage.setItem('POLLING_DISABLED_AT', new Date().toISOString());
+                alert('Polling disabled! Please refresh the main application.');
+                updateStatus();
+            }
+        }
+
+        function updateStatus() {
+            const disabled = localStorage.getItem('DISABLE_POLLING') === 'true';
+            const disabledAt = localStorage.getItem('POLLING_DISABLED_AT');
+            
+            let statusText = disabled 
+                ? `🔴 Polling is DISABLED (since ${disabledAt ? new Date(disabledAt).toLocaleString() : 'unknown'})`
+                : '🟢 Polling is enabled';
+            
+            statusText += `<br>Storage items: ${Object.keys(localStorage).length}`;
+            
+            document.getElementById('status').innerHTML = statusText;
+        }
+
+        function testBackendConnection() {
+            const backendUrl = window.location.hostname === 'localhost' 
+                ? 'http://localhost:3001' 
+                : window.location.origin;
+            
+            const statusDiv = document.getElementById('connectionStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = '#fff3cd';
+            statusDiv.innerHTML = '🔄 Testing backend connection...';
+            
+            fetch(`${backendUrl}/health`, { 
+                method: 'GET',
+                mode: 'cors'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        statusDiv.style.background = '#d4edda';
+                        statusDiv.innerHTML = `✅ Backend is running at ${backendUrl}`;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                })
+                .catch(error => {
+                    statusDiv.style.background = '#f8d7da';
+                    statusDiv.innerHTML = `❌ Cannot connect to backend at ${backendUrl}<br>` +
+                                         `Error: ${error.message}<br>` +
+                                         `Please ensure backend server is running on port 3001`;
+                });
+        }
+
+        function clearServerCache() {
+            // Determine the correct backend URL
+            const backendUrl = window.location.hostname === 'localhost' 
+                ? 'http://localhost:3001' 
+                : window.location.origin;
+            
+            console.log('Attempting to clear cache at:', `${backendUrl}/api/clear-cache`);
+            
+            fetch(`${backendUrl}/api/clear-cache`, { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors'
+            })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    console.log('Response headers:', response.headers);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    // Check if response is JSON
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Server returned non-JSON response. Check if backend is running on port 3001.');
+                    }
+                    
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response data:', data);
+                    if (data.success) {
+                        alert('✅ Server cache cleared successfully!\n\nRate limiting has been reset. You can now use the application normally.');
+                        document.getElementById('success').style.display = 'block';
+                        
+                        // Update connection status
+                        const statusDiv = document.getElementById('connectionStatus');
+                        statusDiv.style.display = 'block';
+                        statusDiv.style.background = '#d4edda';
+                        statusDiv.innerHTML = '✅ Cache cleared successfully!';
+                    } else {
+                        alert('❌ Failed to clear server cache: ' + (data.message || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Clear cache error:', error);
+                    
+                    let errorMessage = error.message;
+                    if (error.message.includes('Failed to fetch')) {
+                        errorMessage = 'Cannot connect to backend server. Please ensure:\n\n' +
+                                     '1. Backend server is running on port 3001\n' +
+                                     '2. Run: npm run dev (from backend directory)\n' +
+                                     '3. Check console for any backend errors';
+                    }
+                    
+                    alert('❌ Error clearing server cache:\n\n' + errorMessage);
+                    
+                    // Update connection status
+                    const statusDiv = document.getElementById('connectionStatus');
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#f8d7da';
+                    statusDiv.innerHTML = '❌ Failed to clear cache: ' + error.message;
+                });
+        }
+
+        // Update status on load
+        updateStatus();
+    </script>
+</body>
+</html>
