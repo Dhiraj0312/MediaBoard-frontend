@@ -5,5 +5,10 @@ export const metadata = {
 };
 
 export default function PlayerLayout({ children }) {
-  return children;
+  // Player page - no AuthContext, no admin app dependencies
+  return (
+    <div style={{ margin: 0, padding: 0 }}>
+      {children}
+    </div>
+  );
 }

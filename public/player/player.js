@@ -60,15 +60,7 @@ class DigitalSignagePlayer {
     }
     
     getApiUrl() {
-        // Priority 1: Check for hardcoded production URL (set during deployment)
-        const PRODUCTION_API_URL = 'https://mediaboard-backend.onrender.com';
-        
-        if (PRODUCTION_API_URL && PRODUCTION_API_URL !== 'REPLACE_WITH_RENDER_URL') {
-            console.log('Using production API URL:', PRODUCTION_API_URL);
-            return PRODUCTION_API_URL;
-        }
-        
-        // Priority 2: Try to detect from current location
+        // Priority 1: Try to detect from current location
         const hostname = window.location.hostname;
         const port = window.location.port;
         const protocol = window.location.protocol;
@@ -77,6 +69,14 @@ class DigitalSignagePlayer {
         if (hostname === 'localhost' || hostname === '127.0.0.1') {
             console.log('Using local development API URL');
             return 'http://localhost:3001';
+        }
+        
+        // Production: Check for hardcoded production URL (set during deployment)
+        const PRODUCTION_API_URL = 'https://mediaboard-backend.onrender.com';
+        
+        if (PRODUCTION_API_URL && PRODUCTION_API_URL !== 'REPLACE_WITH_RENDER_URL') {
+            console.log('Using production API URL:', PRODUCTION_API_URL);
+            return PRODUCTION_API_URL;
         }
         
         // Production: If hosted on Vercel (player is on frontend domain)
@@ -1716,9 +1716,24 @@ class DigitalSignagePlayer {
 }
 
 // Initialize player when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    window.player = new DigitalSignagePlayer();
-});
+function initPlayer() {
+    console.log('🎬 Initializing player...');
+    if (!window.player) {
+        window.player = new DigitalSignagePlayer();
+        console.log('✅ Player initialized successfully');
+    } else {
+        console.log('⚠️ Player already initialized');
+    }
+}
+
+// Check if DOM is already loaded
+if (document.readyState === 'loading') {
+    // DOM is still loading, wait for it
+    document.addEventListener('DOMContentLoaded', initPlayer);
+} else {
+    // DOM is already loaded, initialize immediately
+    initPlayer();
+}
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', () => {
