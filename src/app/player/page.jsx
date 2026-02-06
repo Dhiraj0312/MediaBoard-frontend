@@ -66,7 +66,6 @@ export default function PlayerPage() {
       {/* Load player scripts */}
       <Script src="/player/content-manager.js" strategy="afterInteractive" />
       <Script src="/player/monitoring-dashboard.js" strategy="afterInteractive" />
-      <Script src="/player/debug-player.js" strategy="afterInteractive" />
       <Script src="/player/player.js" strategy="afterInteractive" />
 
       <style jsx global>{`
