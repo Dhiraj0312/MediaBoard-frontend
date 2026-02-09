@@ -79,7 +79,7 @@ class DigitalSignagePlayer {
             return PRODUCTION_API_URL;
         }
         
-        // Production: If hosted on Vercel (player is on frontend domain)
+        // Production: If hosted on   l (player is on frontend domain)
         // Backend is on a different domain (Render)
         if (hostname.includes('vercel.app')) {
             // Fallback to production backend URL

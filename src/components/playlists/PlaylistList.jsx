@@ -126,6 +126,44 @@ export default function PlaylistList() {
     }
   };
 
+  // Handle update playlist duration
+  const handleUpdatePlaylistDuration = async (playlistId, newTotalDuration) => {
+    try {
+      const playlist = playlists.find(p => p.id === playlistId);
+      if (!playlist || playlist.totalItems === 0) {
+        throw new Error('Cannot update duration of empty playlist');
+      }
+
+      // Calculate proportional durations for each item
+      const currentTotal = playlist.totalDuration;
+      const items = playlist.items.map(item => {
+        const proportion = item.duration / currentTotal;
+        const newDuration = Math.max(1, Math.round(proportion * newTotalDuration));
+        return {
+          media_id: item.media.id,
+          duration: newDuration
+        };
+      });
+
+      // Adjust for rounding errors to match exact total
+      const calculatedTotal = items.reduce((sum, item) => sum + item.duration, 0);
+      if (calculatedTotal !== newTotalDuration) {
+        const diff = newTotalDuration - calculatedTotal;
+        items[0].duration += diff;
+      }
+
+      // Update playlist with new item durations
+      const response = await apiClient.updatePlaylist(playlistId, { items });
+      setPlaylists(prev => prev.map(p => 
+        p.id === playlistId ? response.playlist : p
+      ));
+      setError(null);
+    } catch (err) {
+      console.error('Failed to update playlist duration:', err);
+      throw err;
+    }
+  };
+
   // Handle bulk delete
   const handleBulkDelete = async () => {
     try {
@@ -330,6 +368,7 @@ export default function PlaylistList() {
               onDelete={handleDeletePlaylist}
               onDuplicate={handleDuplicatePlaylist}
               onBuild={setBuildingPlaylist}
+              onUpdateDuration={handleUpdatePlaylistDuration}
               loading={actionLoading}
               selectable={true}
               selected={selectedPlaylists.has(playlist.id)}

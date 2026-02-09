@@ -180,16 +180,12 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
     <div className="space-y-6">
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm text-red-800">{error}</p>
-            </div>
+        <div className="bg-error-50 dark:bg-error-900/20 border border-error-200 dark:border-error-800 rounded-lg p-4">
+          <div className="flex gap-3">
+            <svg className="h-5 w-5 text-error-600 dark:text-error-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            </svg>
+            <p className="text-sm text-error-800 dark:text-error-200">{error}</p>
           </div>
         </div>
       )}
@@ -198,7 +194,7 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
         {/* Media Library */}
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Media Library</h3>
+            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Media Library</h3>
             
             {/* Media Filters */}
             <div className="flex gap-3 mb-4">
@@ -210,7 +206,10 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                 />
               </div>
               <select
-                className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="h-10 px-3 py-2 border border-neutral-300 dark:border-neutral-700 
+                  rounded-lg bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100
+                  shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                  transition-all duration-150 text-sm"
                 value={mediaFilter}
                 onChange={(e) => setMediaFilter(e.target.value)}
               >
@@ -222,9 +221,9 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
           </div>
 
           {/* Media Grid */}
-          <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+          <div className="max-h-96 overflow-y-auto border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-900">
             {filteredMedia.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-neutral-500 dark:text-neutral-400">
                 <p>No media found</p>
               </div>
             ) : (
@@ -232,10 +231,12 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                 {filteredMedia.map((mediaItem) => (
                   <div
                     key={mediaItem.id}
-                    className="relative group cursor-pointer border border-gray-200 rounded-lg overflow-hidden hover:border-blue-300 transition-colors"
+                    className="relative group cursor-pointer border border-neutral-200 dark:border-neutral-700 
+                      rounded-lg overflow-hidden hover:border-primary-300 dark:hover:border-primary-600 
+                      transition-colors bg-white dark:bg-neutral-800"
                     onClick={() => addToPlaylist(mediaItem)}
                   >
-                    <div className="aspect-video bg-gray-100">
+                    <div className="aspect-video bg-neutral-100 dark:bg-neutral-800">
                       {mediaItem.type === 'image' ? (
                         <img
                           src={mediaItem.url}
@@ -246,7 +247,7 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <div className="w-full h-full flex items-center justify-center text-neutral-400 dark:text-neutral-500">
                           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                           </svg>
@@ -255,16 +256,16 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                     </div>
                     
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-center justify-center">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-white hover:bg-white hover:bg-opacity-20"
+                      <button
+                        className="opacity-0 group-hover:opacity-100 transition-opacity px-3 py-2 text-sm font-medium
+                          text-white bg-white/20 hover:bg-white/30 rounded-lg backdrop-blur-sm
+                          flex items-center gap-1"
                       >
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                         Add
-                      </Button>
+                      </button>
                     </div>
 
                     <div className="absolute top-1 right-1">
@@ -286,19 +287,19 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
         {/* Playlist Builder */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">
+            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
               Playlist Items ({playlistItems.length})
             </h3>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Total: {formatDuration(totalDuration)}
             </div>
           </div>
 
           {/* Playlist Items */}
-          <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+          <div className="max-h-96 overflow-y-auto border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-900">
             {playlistItems.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
-                <svg className="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="text-center py-8 text-neutral-500 dark:text-neutral-400">
+                <svg className="w-12 h-12 mx-auto mb-2 text-neutral-300 dark:text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                 </svg>
                 <p>No items in playlist</p>
@@ -315,24 +316,26 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                     onDragLeave={handleDragLeave}
                     onDrop={(e) => handleDrop(e, index)}
                     onDragEnd={handleDragEnd}
-                    className={`flex items-center space-x-3 p-3 bg-white border rounded-lg cursor-move hover:shadow-sm transition-shadow ${
-                      dragOverIndex === index ? 'border-blue-300 bg-blue-50' : 'border-gray-200'
+                    className={`flex items-center space-x-3 p-3 bg-white dark:bg-neutral-800 border rounded-lg 
+                      cursor-move hover:shadow-sm transition-shadow ${
+                      dragOverIndex === index ? 'border-primary-300 dark:border-primary-600 bg-primary-50 dark:bg-primary-900/20' : 
+                      'border-neutral-200 dark:border-neutral-700'
                     } ${draggedItem === index ? 'opacity-50' : ''}`}
                   >
                     {/* Drag Handle */}
-                    <div className="text-gray-400">
+                    <div className="text-neutral-400 dark:text-neutral-500">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
                       </svg>
                     </div>
 
                     {/* Order Number */}
-                    <div className="flex-shrink-0 w-6 text-sm text-gray-500 font-medium">
+                    <div className="flex-shrink-0 w-6 text-sm text-neutral-500 dark:text-neutral-400 font-medium">
                       {index + 1}
                     </div>
 
                     {/* Media Preview */}
-                    <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded overflow-hidden">
+                    <div className="flex-shrink-0 w-12 h-12 bg-neutral-100 dark:bg-neutral-700 rounded overflow-hidden">
                       {item.media.type === 'image' ? (
                         <img
                           src={item.media.url}
@@ -343,7 +346,7 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <div className="w-full h-full flex items-center justify-center text-neutral-400 dark:text-neutral-500">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                           </svg>
@@ -353,25 +356,29 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
 
                     {/* Media Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
                         {item.media.name}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
                         {item.media.type}
                       </p>
                     </div>
 
                     {/* Duration Input */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 flex items-center gap-1">
                       <input
                         type="number"
                         min="1"
                         max="3600"
                         value={item.duration}
                         onChange={(e) => updateItemDuration(index, e.target.value)}
-                        className="w-16 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-20 h-10 px-3 text-sm border border-neutral-300 dark:border-neutral-700 
+                          rounded-lg bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100
+                          focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                          transition-all duration-150"
+                        aria-label={`Duration for ${item.media.name}`}
                       />
-                      <span className="text-xs text-gray-500 ml-1">s</span>
+                      <span className="text-xs text-neutral-500 dark:text-neutral-400">s</span>
                     </div>
 
                     {/* Move Controls */}
@@ -379,7 +386,9 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                       <button
                         onClick={() => moveItem(index, 'up')}
                         disabled={index === 0}
-                        className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-30"
+                        className="p-1 text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 
+                          disabled:opacity-30 transition-colors rounded"
+                        aria-label="Move up"
                       >
                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
@@ -388,7 +397,9 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                       <button
                         onClick={() => moveItem(index, 'down')}
                         disabled={index === playlistItems.length - 1}
-                        className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-30"
+                        className="p-1 text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 
+                          disabled:opacity-30 transition-colors rounded"
+                        aria-label="Move down"
                       >
                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -399,7 +410,9 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
                     {/* Remove Button */}
                     <button
                       onClick={() => removeFromPlaylist(index)}
-                      className="flex-shrink-0 p-1 text-red-400 hover:text-red-600"
+                      className="flex-shrink-0 p-1 text-error-400 dark:text-error-500 hover:text-error-600 dark:hover:text-error-400 
+                        transition-colors rounded"
+                      aria-label="Remove from playlist"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -414,15 +427,16 @@ export default function PlaylistBuilder({ playlist, onSave, onCancel }) {
       </div>
 
       {/* Actions */}
-      <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+      <div className="flex justify-end space-x-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
         <Button
-          variant="outline"
+          variant="secondary"
           onClick={onCancel}
           disabled={saving}
         >
           Cancel
         </Button>
         <Button
+          variant="primary"
           onClick={handleSave}
           loading={saving}
           disabled={saving}

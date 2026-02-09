@@ -5,6 +5,20 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Button from './Button';
 
+/**
+ * Modern Modal Component - Mobile-First, Accessible
+ * 
+ * Features:
+ * - Focus trap with Headless UI Dialog
+ * - Backdrop blur effect for modern look
+ * - Smooth fade + scale animations (200ms)
+ * - Escape key to close
+ * - Optional backdrop click to close
+ * - Rounded corners (16px) for large containers
+ * - Responsive sizing
+ * - Proper ARIA attributes
+ * - Body scroll lock when open
+ */
 const Modal = ({
   isOpen,
   onClose,
@@ -31,7 +45,7 @@ const Modal = ({
     full: 'max-w-full',
   };
 
-  // Handle escape key
+  // Handle escape key and body scroll lock
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape' && isOpen) {
@@ -58,40 +72,40 @@ const Modal = ({
         onClose={closeOnOverlayClick ? onClose : () => {}}
         {...props}
       >
-        {/* Backdrop */}
+        {/* Backdrop with blur */}
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
+          enter="ease-out duration-200"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in duration-200"
+          leave="ease-in duration-150"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
         </Transition.Child>
 
         {/* Modal container */}
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-6">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
+              enter="ease-out duration-200"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
+              leave="ease-in duration-150"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className={`
-                w-full ${sizeClasses[size]} transform overflow-hidden rounded-lg 
-                bg-white text-left align-middle shadow-xl transition-all ${className}
+                w-full ${sizeClasses[size]} transform overflow-hidden rounded-xl 
+                bg-white text-left align-middle shadow-2xl transition-all ${className}
               `}>
                 {/* Header */}
                 {(title || showCloseButton) && (
-                  <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                  <div className="flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 border-b border-neutral-200">
                     {title && (
-                      <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                      <Dialog.Title as="h3" className="text-lg font-semibold leading-6 text-neutral-900">
                         {title}
                       </Dialog.Title>
                     )}
@@ -100,17 +114,17 @@ const Modal = ({
                       <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="rounded-lg p-1 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 transition-colors duration-150"
+                        aria-label="Close modal"
                       >
-                        <span className="sr-only">Close</span>
-                        <XMarkIcon className="h-6 w-6" />
+                        <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                       </button>
                     )}
                   </div>
                 )}
 
                 {/* Content */}
-                <div className={title || showCloseButton ? '' : 'p-6'}>
+                <div className={title || showCloseButton ? '' : 'p-4 sm:p-6'}>
                   {children}
                 </div>
               </Dialog.Panel>
@@ -122,14 +136,18 @@ const Modal = ({
   );
 };
 
-// Modal Body Component
+/**
+ * Modal Body - Main content area with responsive padding
+ */
 const ModalBody = ({ children, className = '', ...props }) => (
-  <div className={`px-6 py-4 ${className}`} {...props}>
+  <div className={`px-4 py-4 sm:px-6 sm:py-5 ${className}`} {...props}>
     {children}
   </div>
 );
 
-// Modal Footer Component
+/**
+ * Modal Footer - Action buttons area with responsive padding
+ */
 const ModalFooter = ({ 
   children, 
   className = '',
@@ -137,14 +155,16 @@ const ModalFooter = ({
   secondaryAction,
   ...props 
 }) => (
-  <div className={`px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3 ${className}`} {...props}>
+  <div className={`px-4 py-4 sm:px-6 sm:py-5 bg-neutral-50 border-t border-neutral-200 flex flex-col-reverse sm:flex-row justify-end gap-3 ${className}`} {...props}>
     {children || (
       <>
         {secondaryAction && (
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={secondaryAction.onClick}
             disabled={secondaryAction.disabled}
+            fullWidth={true}
+            className="sm:w-auto"
           >
             {secondaryAction.label || 'Cancel'}
           </Button>
@@ -156,6 +176,8 @@ const ModalFooter = ({
             onClick={primaryAction.onClick}
             disabled={primaryAction.disabled}
             loading={primaryAction.loading}
+            fullWidth={true}
+            className="sm:w-auto"
           >
             {primaryAction.label || 'Confirm'}
           </Button>
@@ -165,7 +187,9 @@ const ModalFooter = ({
   </div>
 );
 
-// Confirmation Modal
+/**
+ * Confirmation Modal - Pre-configured modal for confirmations
+ */
 const ConfirmModal = ({
   isOpen,
   onClose,
@@ -186,7 +210,7 @@ const ConfirmModal = ({
     {...props}
   >
     <ModalBody>
-      <p className="text-sm text-gray-600">{message}</p>
+      <p className="text-sm text-neutral-600 leading-relaxed">{message}</p>
     </ModalBody>
     
     <ModalFooter

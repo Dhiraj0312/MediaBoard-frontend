@@ -69,16 +69,9 @@ export default function PlayerPage() {
       <Script src="/player/player.js" strategy="afterInteractive" />
 
       <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
         body {
-          background: #1a1a2e;
-          color: #fff;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: var(--color-neutral-900);
+          color: var(--color-neutral-50);
           overflow: hidden;
           cursor: default;
         }
@@ -97,8 +90,7 @@ export default function PlayerPage() {
           height: 100%;
           object-fit: contain;
           display: block;
-          background: #333;
-          border: 2px solid #4a90e2;
+          background: var(--color-neutral-800);
         }
 
         .loading {
@@ -118,14 +110,14 @@ export default function PlayerPage() {
         }
 
         .error {
-          color: #ff6b6b;
+          color: var(--color-error-500);
           font-size: 1.5rem;
           text-align: center;
           padding: 2rem;
-          background: rgba(255, 107, 107, 0.1);
-          border-radius: 12px;
+          background: rgba(239, 68, 68, 0.1);
+          border-radius: var(--radius-lg);
           margin: 2rem;
-          border: 1px solid rgba(255, 107, 107, 0.3);
+          border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         .pairing {
@@ -133,20 +125,22 @@ export default function PlayerPage() {
           padding: 2rem;
           max-width: 600px;
           background: rgba(255, 255, 255, 0.05);
-          border-radius: 16px;
-          border: 1px solid rgba(74, 144, 226, 0.3);
+          border-radius: var(--radius-xl);
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          backdrop-filter: blur(8px);
         }
 
         .pairing h1 {
-          font-size: 3rem;
+          font-size: clamp(2rem, 5vw, 3rem);
           margin-bottom: 1rem;
-          color: #4a90e2;
+          color: var(--color-primary-500);
+          font-weight: 700;
         }
 
         .pairing p {
-          font-size: 1.2rem;
+          font-size: clamp(1rem, 2.5vw, 1.2rem);
           margin: 1rem 0;
-          color: #ccc;
+          color: var(--color-neutral-300);
         }
 
         .device-input-container {
@@ -158,75 +152,86 @@ export default function PlayerPage() {
           flex-wrap: wrap;
           background: rgba(255, 255, 255, 0.1);
           padding: 2rem;
-          border-radius: 16px;
-          border: 2px solid #4a90e2;
+          border-radius: var(--radius-xl);
+          border: 2px solid var(--color-primary-500);
         }
 
         .device-code-input {
-          font-size: 2rem;
-          font-weight: bold;
+          font-size: clamp(1.5rem, 4vw, 2rem);
+          font-weight: 700;
           letter-spacing: 0.3em;
-          color: #000;
-          background: rgba(255, 255, 255, 0.9);
+          color: var(--color-neutral-900);
+          background: rgba(255, 255, 255, 0.95);
           padding: 1rem 2rem;
-          border-radius: 12px;
-          border: 3px solid #4a90e2;
+          border-radius: var(--radius-lg);
+          border: 3px solid var(--color-primary-500);
           text-align: center;
           text-transform: uppercase;
-          min-width: 300px;
+          min-width: min(300px, 90vw);
           outline: none;
+          transition: all var(--transition-normal);
+          min-height: 44px;
         }
 
         .device-code-input:focus {
-          border-color: #357abd;
-          box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+          border-color: var(--color-primary-600);
+          box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
         }
 
         .device-code-input::placeholder {
           color: rgba(0, 0, 0, 0.5);
-          font-size: 1.5rem;
+          font-size: clamp(1rem, 3vw, 1.5rem);
           letter-spacing: normal;
         }
 
         .connect-button {
-          background: #4a90e2;
+          background: var(--color-primary-500);
           color: white;
           border: none;
           padding: 1.2rem 2.5rem;
-          border-radius: 12px;
-          font-size: 1.4rem;
-          font-weight: bold;
+          border-radius: var(--radius-lg);
+          font-size: clamp(1rem, 3vw, 1.4rem);
+          font-weight: 600;
           cursor: pointer;
-          transition: background-color 0.3s;
+          transition: all var(--transition-normal);
           min-width: 150px;
-          border: 3px solid #4a90e2;
+          min-height: 44px;
+          border: 3px solid var(--color-primary-500);
         }
 
         .connect-button:hover {
-          background: #357abd;
+          background: var(--color-primary-600);
+          transform: translateY(-1px);
+          box-shadow: var(--shadow-md);
+        }
+
+        .connect-button:active {
+          transform: translateY(0);
         }
 
         .connect-button:disabled {
-          background: #ccc;
+          background: var(--color-neutral-400);
+          border-color: var(--color-neutral-400);
           cursor: not-allowed;
+          transform: none;
         }
 
         .help-text {
-          font-size: 1rem;
-          color: #bbb;
+          font-size: clamp(0.875rem, 2vw, 1rem);
+          color: var(--color-neutral-400);
           margin-top: 1rem;
         }
 
         .device-code {
-          font-size: 4rem;
-          font-weight: bold;
+          font-size: clamp(2rem, 8vw, 4rem);
+          font-weight: 700;
           margin: 2rem 0;
           letter-spacing: 0.3em;
-          color: #4a90e2;
+          color: var(--color-primary-500);
           background: rgba(255, 255, 255, 0.1);
           padding: 1rem 2rem;
-          border-radius: 12px;
-          border: 2px solid #4a90e2;
+          border-radius: var(--radius-lg);
+          border: 2px solid var(--color-primary-500);
         }
 
         .status-indicator {
@@ -234,39 +239,42 @@ export default function PlayerPage() {
           top: 20px;
           right: 20px;
           padding: 8px 16px;
-          border-radius: 20px;
+          border-radius: var(--radius-full);
           font-size: 0.9rem;
-          font-weight: bold;
+          font-weight: 600;
           z-index: 1000;
-          opacity: 0.8;
+          opacity: 0.9;
+          transition: opacity var(--transition-normal);
+          backdrop-filter: blur(8px);
         }
 
         .status-online {
-          background: #28a745;
+          background: var(--color-success-500);
           color: white;
         }
 
         .status-offline {
-          background: #dc3545;
+          background: var(--color-error-500);
           color: white;
         }
 
         .status-loading {
-          background: #ffc107;
-          color: black;
+          background: var(--color-warning-500);
+          color: var(--color-neutral-900);
         }
 
         .playlist-info {
           position: fixed;
           bottom: 20px;
           left: 20px;
-          background: rgba(0, 0, 0, 0.7);
+          background: rgba(0, 0, 0, 0.8);
           padding: 10px 15px;
-          border-radius: 8px;
+          border-radius: var(--radius-md);
           font-size: 0.9rem;
           z-index: 1000;
           opacity: 0;
-          transition: opacity 0.3s;
+          transition: opacity var(--transition-normal);
+          backdrop-filter: blur(8px);
         }
 
         .playlist-info.show {
@@ -278,7 +286,7 @@ export default function PlayerPage() {
           bottom: 0;
           left: 0;
           height: 4px;
-          background: #4a90e2;
+          background: var(--color-primary-500);
           transition: width 0.1s linear;
           z-index: 1000;
         }
@@ -287,23 +295,28 @@ export default function PlayerPage() {
           position: fixed;
           top: 20px;
           left: 20px;
-          background: rgba(0, 0, 0, 0.7);
+          background: rgba(0, 0, 0, 0.8);
           border: none;
           color: white;
           padding: 10px;
-          border-radius: 5px;
+          border-radius: var(--radius-md);
           cursor: pointer;
           font-size: 1rem;
           z-index: 1000;
           opacity: 0.7;
-          transition: opacity 0.3s;
+          transition: all var(--transition-normal);
+          backdrop-filter: blur(8px);
+          min-width: 44px;
+          min-height: 44px;
         }
 
         .fullscreen-toggle:hover {
           opacity: 1;
+          background: rgba(0, 0, 0, 0.9);
         }
 
         .fullscreen-mode .status-indicator,
+        .fullscreen-mode .network-status,
         .fullscreen-mode .playlist-info,
         .fullscreen-mode .fullscreen-toggle {
           display: none;
@@ -311,7 +324,7 @@ export default function PlayerPage() {
 
         .fade-transition {
           opacity: 0;
-          transition: opacity 0.5s ease-in-out;
+          transition: opacity var(--transition-slow);
         }
 
         .fade-transition.show {
@@ -323,20 +336,44 @@ export default function PlayerPage() {
           top: 60px;
           right: 20px;
           padding: 5px 10px;
-          border-radius: 15px;
+          border-radius: var(--radius-full);
           font-size: 0.8rem;
           z-index: 1000;
-          opacity: 0.8;
+          opacity: 0.9;
+          transition: opacity var(--transition-normal);
+          backdrop-filter: blur(8px);
         }
 
         .network-online {
-          background: #28a745;
+          background: var(--color-success-500);
           color: white;
         }
 
         .network-offline {
-          background: #dc3545;
+          background: var(--color-error-500);
           color: white;
+        }
+
+        @media (max-width: 640px) {
+          .pairing {
+            padding: 1.5rem;
+            margin: 1rem;
+          }
+
+          .device-input-container {
+            padding: 1.5rem;
+            gap: 0.75rem;
+          }
+
+          .status-indicator,
+          .network-status {
+            font-size: 0.75rem;
+            padding: 6px 12px;
+          }
+
+          .fullscreen-toggle {
+            padding: 8px;
+          }
         }
       `}</style>
     </>

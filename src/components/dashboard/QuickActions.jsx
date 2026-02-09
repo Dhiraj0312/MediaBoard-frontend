@@ -6,8 +6,9 @@ import {
   ComputerDesktopIcon, 
   PhotoIcon, 
   PlayIcon,
-  Cog6ToothIcon,
-  ArrowPathIcon
+  LinkIcon,
+  ArrowPathIcon,
+  SparklesIcon
 } from '@heroicons/react/24/outline';
 
 export default function QuickActions() {
@@ -16,34 +17,34 @@ export default function QuickActions() {
   const actions = [
     {
       name: 'Add Screen',
-      description: 'Register a new digital signage screen',
+      description: 'Register new display',
       icon: ComputerDesktopIcon,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50 hover:bg-blue-100',
+      color: 'text-primary-600 dark:text-primary-400',
+      bgColor: 'bg-primary-50 dark:bg-primary-900/20 hover:bg-primary-100 dark:hover:bg-primary-900/30',
       onClick: () => router.push('/screens?action=add')
     },
     {
       name: 'Upload Media',
-      description: 'Add new images or videos',
+      description: 'Add images/videos',
       icon: PhotoIcon,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50 hover:bg-purple-100',
+      color: 'text-purple-600 dark:text-purple-400',
+      bgColor: 'bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30',
       onClick: () => router.push('/media?action=upload')
     },
     {
       name: 'Create Playlist',
-      description: 'Build a new content playlist',
+      description: 'Build content list',
       icon: PlayIcon,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50 hover:bg-green-100',
+      color: 'text-success-600 dark:text-success-400',
+      bgColor: 'bg-success-50 dark:bg-success-900/20 hover:bg-success-100 dark:hover:bg-success-900/30',
       onClick: () => router.push('/playlists?action=create')
     },
     {
-      name: 'Manage Assignments',
-      description: 'Assign playlists to screens',
-      icon: Cog6ToothIcon,
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-50 hover:bg-indigo-100',
+      name: 'Assignments',
+      description: 'Link playlists',
+      icon: LinkIcon,
+      color: 'text-indigo-600 dark:text-indigo-400',
+      bgColor: 'bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30',
       onClick: () => router.push('/assignments')
     }
   ];
@@ -53,73 +54,83 @@ export default function QuickActions() {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h3 className="text-lg font-medium text-gray-900">Quick Actions</h3>
+    <div className="card-modern p-5 sm:p-6">
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-5">
+        <SparklesIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+          Quick Actions
+        </h3>
       </div>
-      
-      <div className="p-6">
-        <div className="space-y-3">
-          {actions.map((action) => {
-            const Icon = action.icon;
-            return (
-              <button
-                key={action.name}
-                onClick={action.onClick}
-                className={`w-full text-left p-4 rounded-lg border border-gray-200 transition-colors ${action.bgColor}`}
-              >
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Icon className={`h-6 w-6 ${action.color}`} />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="text-sm font-medium text-gray-900">{action.name}</h4>
-                    <p className="text-xs text-gray-500 mt-1">{action.description}</p>
-                  </div>
-                  <div className="ml-auto">
-                    <PlusIcon className="h-4 w-4 text-gray-400" />
-                  </div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
 
-        {/* System actions */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <h4 className="text-sm font-medium text-gray-900 mb-3">System Actions</h4>
-          <div className="space-y-2">
+      {/* Action Buttons */}
+      <div className="space-y-2 mb-6">
+        {actions.map((action) => {
+          const Icon = action.icon;
+          return (
             <button
-              onClick={handleRefreshAll}
-              className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              key={action.name}
+              onClick={action.onClick}
+              className={`w-full p-4 rounded-lg border border-transparent transition-all duration-200 text-left group ${action.bgColor}`}
             >
-              <ArrowPathIcon className="h-4 w-4 mr-2" />
-              Refresh Dashboard
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white dark:bg-neutral-900 rounded-lg shadow-sm group-hover:scale-110 transition-transform duration-200">
+                  <Icon className={`w-5 h-5 ${action.color}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    {action.name}
+                  </p>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-0.5">
+                    {action.description}
+                  </p>
+                </div>
+                <PlusIcon className="w-5 h-5 text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors" />
+              </div>
             </button>
-          </div>
-        </div>
+          );
+        })}
+      </div>
 
-        {/* Help section */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <h4 className="text-sm font-medium text-gray-900 mb-3">Getting Started</h4>
-          <div className="space-y-2 text-sm text-gray-600">
-            <div className="flex items-start">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium flex items-center justify-center mr-3 mt-0.5">1</span>
-              <span>Add your first screen using the device code</span>
+      {/* System Actions */}
+      <div className="pt-5 border-t border-neutral-200 dark:border-neutral-700">
+        <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3">
+          System
+        </h4>
+        <button
+          onClick={handleRefreshAll}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg
+            bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700
+            text-neutral-700 dark:text-neutral-200 text-sm font-medium
+            transition-all duration-200 min-h-[44px]
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+        >
+          <ArrowPathIcon className="w-4 h-4" />
+          Refresh Dashboard
+        </button>
+      </div>
+
+      {/* Getting Started Guide */}
+      <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+        <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3">
+          Getting Started
+        </h4>
+        <div className="space-y-3">
+          {[
+            'Add your first screen using device code',
+            'Upload media files (images/videos)',
+            'Create playlists with your media',
+            'Assign playlists to screens'
+          ].map((step, index) => (
+            <div key={index} className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-semibold flex items-center justify-center">
+                {index + 1}
+              </div>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 pt-0.5">
+                {step}
+              </p>
             </div>
-            <div className="flex items-start">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium flex items-center justify-center mr-3 mt-0.5">2</span>
-              <span>Upload media files (images or videos)</span>
-            </div>
-            <div className="flex items-start">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium flex items-center justify-center mr-3 mt-0.5">3</span>
-              <span>Create playlists with your media</span>
-            </div>
-            <div className="flex items-start">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium flex items-center justify-center mr-3 mt-0.5">4</span>
-              <span>Assign playlists to screens</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

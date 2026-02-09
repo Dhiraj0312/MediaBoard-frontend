@@ -1,12 +1,28 @@
 /**
- * Enterprise Design System Theme Configuration
- * Consistent styling and design tokens for the Digital Signage Platform
+ * Modern Mobile-First Design System Theme Configuration
+ * Professional, elegant design tokens for the Digital Signage Platform
+ * Following mobile-first approach with neutral palette and subtle accents
  */
 
 export const theme = {
-  // Color Palette - Professional Enterprise Colors
+  // Color Palette - Modern Neutral with Subtle Accents
   colors: {
-    // Primary Brand Colors
+    // Neutral Colors (Primary palette for backgrounds, text, borders)
+    neutral: {
+      50: '#fafafa',   // Lightest - subtle backgrounds
+      100: '#f5f5f5',  // Light backgrounds
+      200: '#e5e5e5',  // Borders, dividers
+      300: '#d4d4d4',  // Disabled states
+      400: '#a3a3a3',  // Placeholder text
+      500: '#737373',  // Secondary text
+      600: '#525252',  // Body text
+      700: '#404040',  // Headings
+      800: '#262626',  // Dark text
+      900: '#171717',  // Darkest text
+      950: '#0a0a0a',  // Maximum contrast
+    },
+    
+    // Primary Brand Colors (Subtle blue accent)
     primary: {
       50: '#eff6ff',
       100: '#dbeafe', 
@@ -20,28 +36,14 @@ export const theme = {
       900: '#1e3a8a',
     },
     
-    // Secondary Colors
-    secondary: {
-      50: '#f8fafc',
-      100: '#f1f5f9',
-      200: '#e2e8f0',
-      300: '#cbd5e1',
-      400: '#94a3b8',
-      500: '#64748b',
-      600: '#475569',
-      700: '#334155',
-      800: '#1e293b',
-      900: '#0f172a',
-    },
-    
-    // Status Colors
+    // Semantic Status Colors
     success: {
       50: '#f0fdf4',
       100: '#dcfce7',
       200: '#bbf7d0',
       300: '#86efac',
       400: '#4ade80',
-      500: '#22c55e',
+      500: '#10b981',  // Main success color
       600: '#16a34a',
       700: '#15803d',
       800: '#166534',
@@ -54,7 +56,7 @@ export const theme = {
       200: '#fde68a',
       300: '#fcd34d',
       400: '#fbbf24',
-      500: '#f59e0b',
+      500: '#f59e0b',  // Main warning color
       600: '#d97706',
       700: '#b45309',
       800: '#92400e',
@@ -67,7 +69,7 @@ export const theme = {
       200: '#fecaca',
       300: '#fca5a5',
       400: '#f87171',
-      500: '#ef4444',
+      500: '#ef4444',  // Main error color
       600: '#dc2626',
       700: '#b91c1c',
       800: '#991b1b',
@@ -80,114 +82,115 @@ export const theme = {
       200: '#bae6fd',
       300: '#7dd3fc',
       400: '#38bdf8',
-      500: '#0ea5e9',
+      500: '#0ea5e9',  // Main info color
       600: '#0284c7',
       700: '#0369a1',
       800: '#075985',
       900: '#0c4a6e',
     },
     
-    // Neutral Grays
+    // Legacy gray support (maps to neutral)
     gray: {
-      50: '#f9fafb',
-      100: '#f3f4f6',
-      200: '#e5e7eb',
-      300: '#d1d5db',
-      400: '#9ca3af',
-      500: '#6b7280',
-      600: '#4b5563',
-      700: '#374151',
-      800: '#1f2937',
-      900: '#111827',
+      50: '#fafafa',
+      100: '#f5f5f5',
+      200: '#e5e5e5',
+      300: '#d4d4d4',
+      400: '#a3a3a3',
+      500: '#737373',
+      600: '#525252',
+      700: '#404040',
+      800: '#262626',
+      900: '#171717',
     }
   },
   
-  // Typography Scale
+  // Typography Scale - Modern, Readable
   typography: {
     fontFamily: {
-      sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-      mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'monospace'],
+      sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', 'monospace'],
     },
     
     fontSize: {
-      xs: ['0.75rem', { lineHeight: '1rem' }],
-      sm: ['0.875rem', { lineHeight: '1.25rem' }],
-      base: ['1rem', { lineHeight: '1.5rem' }],
-      lg: ['1.125rem', { lineHeight: '1.75rem' }],
-      xl: ['1.25rem', { lineHeight: '1.75rem' }],
-      '2xl': ['1.5rem', { lineHeight: '2rem' }],
-      '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-      '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-      '5xl': ['3rem', { lineHeight: '1' }],
-      '6xl': ['3.75rem', { lineHeight: '1' }],
+      xs: ['0.75rem', { lineHeight: '1rem' }],      // 12px / 16px
+      sm: ['0.875rem', { lineHeight: '1.25rem' }],  // 14px / 20px
+      base: ['1rem', { lineHeight: '1.5rem' }],     // 16px / 24px
+      lg: ['1.125rem', { lineHeight: '1.75rem' }],  // 18px / 28px
+      xl: ['1.25rem', { lineHeight: '1.75rem' }],   // 20px / 28px
+      '2xl': ['1.5rem', { lineHeight: '2rem' }],    // 24px / 32px
+      '3xl': ['1.875rem', { lineHeight: '2.25rem' }], // 30px / 36px
+      '4xl': ['2.25rem', { lineHeight: '2.5rem' }],   // 36px / 40px
+      '5xl': ['3rem', { lineHeight: '1.2' }],         // 48px
+      '6xl': ['3.75rem', { lineHeight: '1.1' }],      // 60px
     },
     
     fontWeight: {
-      thin: '100',
-      extralight: '200',
-      light: '300',
       normal: '400',
       medium: '500',
       semibold: '600',
       bold: '700',
-      extrabold: '800',
-      black: '900',
-    }
+    },
+    
+    letterSpacing: {
+      tight: '-0.01em',  // For headings
+      normal: '0em',     // For body text
+      wide: '0.025em',   // For uppercase text
+    },
   },
   
-  // Spacing Scale
+  // Spacing Scale - 4px base grid
   spacing: {
     px: '1px',
     0: '0px',
-    0.5: '0.125rem',
-    1: '0.25rem',
-    1.5: '0.375rem',
-    2: '0.5rem',
-    2.5: '0.625rem',
-    3: '0.75rem',
-    3.5: '0.875rem',
-    4: '1rem',
-    5: '1.25rem',
-    6: '1.5rem',
-    7: '1.75rem',
-    8: '2rem',
-    9: '2.25rem',
-    10: '2.5rem',
-    11: '2.75rem',
-    12: '3rem',
-    14: '3.5rem',
-    16: '4rem',
-    20: '5rem',
-    24: '6rem',
-    28: '7rem',
-    32: '8rem',
-    36: '9rem',
-    40: '10rem',
-    44: '11rem',
-    48: '12rem',
-    52: '13rem',
-    56: '14rem',
-    60: '15rem',
-    64: '16rem',
-    72: '18rem',
-    80: '20rem',
-    96: '24rem',
+    0.5: '0.125rem',  // 2px
+    1: '0.25rem',     // 4px
+    1.5: '0.375rem',  // 6px
+    2: '0.5rem',      // 8px
+    2.5: '0.625rem',  // 10px
+    3: '0.75rem',     // 12px
+    3.5: '0.875rem',  // 14px
+    4: '1rem',        // 16px
+    5: '1.25rem',     // 20px
+    6: '1.5rem',      // 24px
+    7: '1.75rem',     // 28px
+    8: '2rem',        // 32px
+    9: '2.25rem',     // 36px
+    10: '2.5rem',     // 40px
+    11: '2.75rem',    // 44px (touch target)
+    12: '3rem',       // 48px
+    14: '3.5rem',     // 56px
+    16: '4rem',       // 64px
+    20: '5rem',       // 80px
+    24: '6rem',       // 96px
+    28: '7rem',       // 112px
+    32: '8rem',       // 128px
+    36: '9rem',       // 144px
+    40: '10rem',      // 160px
+    44: '11rem',      // 176px
+    48: '12rem',      // 192px
+    52: '13rem',      // 208px
+    56: '14rem',      // 224px
+    60: '15rem',      // 240px
+    64: '16rem',      // 256px
+    72: '18rem',      // 288px
+    80: '20rem',      // 320px
+    96: '24rem',      // 384px
   },
   
-  // Border Radius
+  // Border Radius - Soft, Modern Corners
   borderRadius: {
     none: '0px',
-    sm: '0.125rem',
-    DEFAULT: '0.25rem',
-    md: '0.375rem',
-    lg: '0.5rem',
-    xl: '0.75rem',
-    '2xl': '1rem',
-    '3xl': '1.5rem',
-    full: '9999px',
+    sm: '0.25rem',    // 4px - badges, tags
+    DEFAULT: '0.5rem', // 8px - buttons, inputs
+    md: '0.5rem',     // 8px - same as default
+    lg: '0.75rem',    // 12px - cards, panels
+    xl: '1rem',       // 16px - modals, large containers
+    '2xl': '1.5rem',  // 24px - hero sections
+    '3xl': '2rem',    // 32px - extra large
+    full: '9999px',   // Pills, avatars
   },
   
-  // Shadows
+  // Shadows - Soft, Subtle Elevation
   boxShadow: {
     sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
     DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
@@ -199,28 +202,29 @@ export const theme = {
     none: 'none',
   },
   
-  // Breakpoints for Responsive Design
+  // Breakpoints - Mobile-First Responsive
   screens: {
-    sm: '640px',
-    md: '768px',
-    lg: '1024px',
-    xl: '1280px',
-    '2xl': '1536px',
+    sm: '640px',   // Large phones
+    md: '768px',   // Tablets
+    lg: '1024px',  // Laptops
+    xl: '1280px',  // Desktops
+    '2xl': '1536px', // Large desktops
   },
   
-  // Animation & Transitions
+  // Animation & Transitions - Smooth, Subtle
   animation: {
     none: 'none',
     spin: 'spin 1s linear infinite',
     ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
     pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
     bounce: 'bounce 1s infinite',
-    fadeIn: 'fadeIn 0.3s ease-in-out',
+    fadeIn: 'fadeIn 0.2s ease-in-out',
     slideIn: 'slideIn 0.3s ease-out',
     slideUp: 'slideUp 0.3s ease-out',
+    scaleIn: 'scaleIn 0.2s ease-out',
   },
   
-  // Transition Durations
+  // Transition Durations - Fast, Responsive
   transitionDuration: {
     75: '75ms',
     100: '100ms',
@@ -232,7 +236,15 @@ export const theme = {
     1000: '1000ms',
   },
   
-  // Z-Index Scale
+  // Transition Timing Functions
+  transitionTimingFunction: {
+    'ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+    'ease-out': 'cubic-bezier(0, 0, 0.2, 1)',
+    'ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
+    'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+  },
+  
+  // Z-Index Scale - Layering System
   zIndex: {
     0: '0',
     10: '10',
@@ -251,94 +263,99 @@ export const theme = {
   }
 };
 
-// Component-specific design tokens
+// Component-specific design tokens - Modern, Minimal Aesthetic
 export const components = {
-  // Button variants
+  // Button variants - Clean, Professional
   button: {
-    base: 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+    base: 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none rounded-lg',
     
     variants: {
-      primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-      secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500',
-      success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500',
-      warning: 'bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500',
-      error: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-      outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500',
-      ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
+      primary: 'bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus:ring-primary-500 shadow-sm hover:shadow-md',
+      secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 active:bg-neutral-300 focus:ring-neutral-500 border border-neutral-300',
+      tertiary: 'text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200 focus:ring-neutral-500',
+      success: 'bg-success-600 text-white hover:bg-success-700 active:bg-success-800 focus:ring-success-500 shadow-sm',
+      warning: 'bg-warning-600 text-white hover:bg-warning-700 active:bg-warning-800 focus:ring-warning-500 shadow-sm',
+      error: 'bg-error-600 text-white hover:bg-error-700 active:bg-error-800 focus:ring-error-500 shadow-sm',
+      outline: 'border-2 border-neutral-300 bg-white text-neutral-700 hover:bg-neutral-50 active:bg-neutral-100 focus:ring-primary-500',
+      ghost: 'text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200 focus:ring-neutral-400',
     },
     
     sizes: {
-      xs: 'px-2.5 py-1.5 text-xs rounded',
-      sm: 'px-3 py-2 text-sm rounded-md',
-      md: 'px-4 py-2 text-sm rounded-md',
-      lg: 'px-4 py-2 text-base rounded-md',
-      xl: 'px-6 py-3 text-base rounded-md',
+      sm: 'h-8 px-3 text-sm',      // 32px height
+      md: 'h-10 px-4 text-base',   // 40px height
+      lg: 'h-12 px-6 text-lg',     // 48px height
     }
   },
   
-  // Input variants
+  // Input variants - Clean, Accessible
   input: {
-    base: 'block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-    error: 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500',
-    success: 'border-green-300 focus:ring-green-500 focus:border-green-500',
+    base: 'block w-full h-10 px-3 border border-neutral-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-150 text-base placeholder:text-neutral-400',
+    error: 'border-error-500 focus:ring-error-500/20 focus:border-error-500 text-error-900 placeholder:text-error-300',
+    success: 'border-success-500 focus:ring-success-500/20 focus:border-success-500',
+    disabled: 'bg-neutral-100 cursor-not-allowed opacity-60',
   },
   
-  // Card variants
+  // Card variants - Soft, Elevated
   card: {
-    base: 'bg-white overflow-hidden shadow rounded-lg',
-    elevated: 'bg-white overflow-hidden shadow-lg rounded-lg',
-    bordered: 'bg-white overflow-hidden border border-gray-200 rounded-lg',
+    base: 'bg-white overflow-hidden shadow-sm rounded-lg border border-neutral-200 transition-shadow duration-200',
+    elevated: 'bg-white overflow-hidden shadow-md rounded-lg border border-neutral-200 hover:shadow-lg transition-shadow duration-200',
+    bordered: 'bg-white overflow-hidden border-2 border-neutral-200 rounded-lg',
+    flat: 'bg-white overflow-hidden border border-neutral-200 rounded-lg',
   },
   
-  // Badge variants
+  // Badge variants - Subtle, Informative
   badge: {
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
     
     variants: {
-      primary: 'bg-blue-100 text-blue-800',
-      secondary: 'bg-gray-100 text-gray-800',
-      success: 'bg-green-100 text-green-800',
-      warning: 'bg-yellow-100 text-yellow-800',
-      error: 'bg-red-100 text-red-800',
-      info: 'bg-blue-100 text-blue-800',
+      primary: 'bg-primary-100 text-primary-800 border border-primary-200',
+      secondary: 'bg-neutral-100 text-neutral-800 border border-neutral-200',
+      success: 'bg-success-100 text-success-800 border border-success-200',
+      warning: 'bg-warning-100 text-warning-800 border border-warning-200',
+      error: 'bg-error-100 text-error-800 border border-error-200',
+      info: 'bg-info-100 text-info-800 border border-info-200',
     }
   },
   
-  // Alert variants
+  // Alert variants - Clear, Actionable
   alert: {
-    base: 'rounded-md p-4',
+    base: 'rounded-lg p-4 border',
     
     variants: {
-      success: 'bg-green-50 border border-green-200 text-green-800',
-      warning: 'bg-yellow-50 border border-yellow-200 text-yellow-800',
-      error: 'bg-red-50 border border-red-200 text-red-800',
-      info: 'bg-blue-50 border border-blue-200 text-blue-800',
+      success: 'bg-success-50 border-success-200 text-success-900',
+      warning: 'bg-warning-50 border-warning-200 text-warning-900',
+      error: 'bg-error-50 border-error-200 text-error-900',
+      info: 'bg-info-50 border-info-200 text-info-900',
     }
   }
 };
 
-// Layout constants
+// Layout constants - Responsive, Mobile-First
 export const layout = {
   sidebar: {
-    width: '16rem', // 256px
+    width: '16rem',         // 256px
     collapsedWidth: '4rem', // 64px
   },
   
   header: {
-    height: '4rem', // 64px
+    height: '4rem',         // 64px
   },
   
   container: {
-    maxWidth: '7xl', // 1280px
+    maxWidth: '80rem',      // 1280px (7xl)
     padding: {
-      sm: '1rem',
-      md: '1.5rem',
-      lg: '2rem',
+      mobile: '1rem',       // 16px
+      tablet: '1.5rem',     // 24px
+      desktop: '2rem',      // 32px
     }
+  },
+  
+  touchTarget: {
+    minimum: '2.75rem',     // 44px minimum touch target
   }
 };
 
-// Animation keyframes (for CSS-in-JS or custom CSS)
+// Animation keyframes - Smooth, Subtle
 export const keyframes = {
   fadeIn: {
     '0%': { opacity: '0' },
@@ -346,13 +363,18 @@ export const keyframes = {
   },
   
   slideIn: {
-    '0%': { transform: 'translateX(-100%)' },
-    '100%': { transform: 'translateX(0)' }
+    '0%': { transform: 'translateX(-100%)', opacity: '0' },
+    '100%': { transform: 'translateX(0)', opacity: '1' }
   },
   
   slideUp: {
     '0%': { transform: 'translateY(100%)', opacity: '0' },
     '100%': { transform: 'translateY(0)', opacity: '1' }
+  },
+  
+  scaleIn: {
+    '0%': { transform: 'scale(0.95)', opacity: '0' },
+    '100%': { transform: 'scale(1)', opacity: '1' }
   },
   
   spin: {
@@ -375,6 +397,105 @@ export const keyframes = {
       animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
     }
   }
+};
+
+// Dark mode color palette - Task 17.2
+export const darkTheme = {
+  colors: {
+    // Neutral Colors (Inverted for dark mode)
+    neutral: {
+      50: '#0a0a0a',   // Darkest - backgrounds
+      100: '#171717',  // Dark backgrounds
+      200: '#262626',  // Borders, dividers
+      300: '#404040',  // Disabled states
+      400: '#525252',  // Placeholder text
+      500: '#737373',  // Secondary text
+      600: '#a3a3a3',  // Body text
+      700: '#d4d4d4',  // Headings
+      800: '#e5e5e5',  // Light text
+      900: '#f5f5f5',  // Lightest text
+      950: '#fafafa',  // Maximum contrast
+    },
+    
+    // Primary Brand Colors (Adjusted for dark mode - lighter shades)
+    primary: {
+      50: '#1e3a8a',
+      100: '#1e40af',
+      200: '#1d4ed8',
+      300: '#2563eb',
+      400: '#3b82f6',
+      500: '#60a5fa', // Main brand color (lighter for dark mode)
+      600: '#93c5fd',
+      700: '#bfdbfe',
+      800: '#dbeafe',
+      900: '#eff6ff',
+    },
+    
+    // Semantic Status Colors (Adjusted for dark mode)
+    success: {
+      50: '#14532d',
+      100: '#166534',
+      200: '#15803d',
+      300: '#16a34a',
+      400: '#10b981',
+      500: '#4ade80',  // Main success color (lighter)
+      600: '#86efac',
+      700: '#bbf7d0',
+      800: '#dcfce7',
+      900: '#f0fdf4',
+    },
+    
+    warning: {
+      50: '#78350f',
+      100: '#92400e',
+      200: '#b45309',
+      300: '#d97706',
+      400: '#f59e0b',
+      500: '#fbbf24',  // Main warning color (lighter)
+      600: '#fcd34d',
+      700: '#fde68a',
+      800: '#fef3c7',
+      900: '#fffbeb',
+    },
+    
+    error: {
+      50: '#7f1d1d',
+      100: '#991b1b',
+      200: '#b91c1c',
+      300: '#dc2626',
+      400: '#ef4444',
+      500: '#f87171',  // Main error color (lighter)
+      600: '#fca5a5',
+      700: '#fecaca',
+      800: '#fee2e2',
+      900: '#fef2f2',
+    },
+    
+    info: {
+      50: '#0c4a6e',
+      100: '#075985',
+      200: '#0369a1',
+      300: '#0284c7',
+      400: '#0ea5e9',
+      500: '#38bdf8',  // Main info color (lighter)
+      600: '#7dd3fc',
+      700: '#bae6fd',
+      800: '#e0f2fe',
+      900: '#f0f9ff',
+    },
+  },
+  
+  // Shadows for dark mode (lighter, more subtle)
+  boxShadow: {
+    sm: '0 1px 2px 0 rgb(255 255 255 / 0.05)',
+    DEFAULT: '0 1px 3px 0 rgb(255 255 255 / 0.1), 0 1px 2px -1px rgb(255 255 255 / 0.1)',
+    md: '0 4px 6px -1px rgb(255 255 255 / 0.1), 0 2px 4px -2px rgb(255 255 255 / 0.1)',
+    lg: '0 10px 15px -3px rgb(255 255 255 / 0.1), 0 4px 6px -4px rgb(255 255 255 / 0.1)',
+    xl: '0 20px 25px -5px rgb(255 255 255 / 0.1), 0 8px 10px -6px rgb(255 255 255 / 0.1)',
+    '2xl': '0 25px 50px -12px rgb(255 255 255 / 0.15)',
+    inner: 'inset 0 2px 4px 0 rgb(255 255 255 / 0.05)',
+    none: 'none',
+  },
 };
 
 export default theme;

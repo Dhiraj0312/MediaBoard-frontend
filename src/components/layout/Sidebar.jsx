@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import Tooltip from '@/components/ui/Tooltip';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import {
   HomeIcon,
   ComputerDesktopIcon,
@@ -82,59 +83,64 @@ export default function Sidebar({ isOpen, setIsOpen }) {
 
   return (
     <>
-      {/* Mobile sidebar overlay */}
+      {/* Mobile sidebar overlay - Modern backdrop with blur */}
       {isOpen && (
         <div 
           className="fixed inset-0 z-40 lg:hidden"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         >
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity"></div>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-200"></div>
         </div>
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - Modern design with neutral colors */}
       <div 
+        id="sidebar-navigation"
         className={`
-          fixed inset-y-0 left-0 z-50 ${sidebarWidth} bg-gray-900 transform transition-all duration-300 ease-in-out 
+          fixed inset-y-0 left-0 z-50 ${sidebarWidth} 
+          bg-neutral-900 dark:bg-neutral-950 
+          transform transition-all duration-200 ease-in-out 
           lg:translate-x-0 lg:static lg:inset-0
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          border-r border-neutral-800 dark:border-neutral-900
         `}
         role="navigation"
         aria-label="Main navigation"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between h-16 bg-gray-800 px-4">
+        {/* Header - Modern with rounded corners on toggle */}
+        <div className="flex items-center justify-between h-16 bg-neutral-800 dark:bg-neutral-900 px-4 border-b border-neutral-700 dark:border-neutral-800">
           {!isCollapsed && (
             <h1 className="text-white text-lg font-semibold truncate">
               Digital Signage
             </h1>
           )}
           
-          {/* Desktop collapse toggle */}
+          {/* Desktop collapse toggle - Modern rounded button */}
           <button
             onClick={toggleCollapse}
-            className="hidden lg:flex p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+            className="hidden lg:flex p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-all duration-150"
             aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-expanded={!isCollapsed}
           >
             {isCollapsed ? (
-              <Bars3Icon className="h-5 w-5" />
+              <Bars3Icon className="h-5 w-5" aria-hidden="true" />
             ) : (
-              <XMarkIcon className="h-5 w-5" />
+              <XMarkIcon className="h-5 w-5" aria-hidden="true" />
             )}
           </button>
 
-          {/* Mobile close button */}
+          {/* Mobile close button - Modern rounded button */}
           <button
             onClick={() => setIsOpen(false)}
-            className="lg:hidden p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+            className="lg:hidden p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-all duration-150"
             aria-label="Close sidebar"
           >
-            <XMarkIcon className="h-5 w-5" />
+            <XMarkIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation - Modern with 44px touch targets */}
         <nav className="mt-5 px-2 space-y-1" aria-label="Sidebar navigation">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
@@ -144,11 +150,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <Link
                 href={item.href}
                 className={`
-                  group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200
-                  focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900
+                  group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-150
+                  focus:outline-none focus:ring-2 focus:ring-primary-500/20 min-h-[44px]
                   ${isActive
-                    ? 'bg-gray-800 text-white shadow-sm'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white hover-lift'
+                    ? 'bg-neutral-800 text-white shadow-sm'
+                    : 'text-neutral-300 hover:bg-neutral-800 hover:text-white'
                   }
                   ${isCollapsed ? 'justify-center' : ''}
                 `}
@@ -163,7 +169,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                   <span className="truncate">{item.name}</span>
                 )}
                 {isActive && (
-                  <div className="absolute left-0 w-1 h-8 bg-blue-500 rounded-r-md" aria-hidden="true" />
+                  <div className="absolute left-0 w-1 h-10 bg-primary-500 rounded-r" aria-hidden="true" />
                 )}
               </Link>
             );
@@ -182,14 +188,19 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           })}
         </nav>
 
-        {/* User section */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gray-800 border-t border-gray-700">
+        {/* User section - Modern with rounded corners */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-neutral-800 border-t border-neutral-700">
+          {/* Theme toggle - positioned above user section */}
+          <div className={`mb-3 flex ${isCollapsed ? 'justify-center' : 'justify-end'}`}>
+            <ThemeToggle className="min-h-[44px] min-w-[44px]" />
+          </div>
+          
           <div className={`flex items-center ${isCollapsed ? 'justify-center' : ''}`}>
             {!isCollapsed && (
               <>
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-sm">
-                    <span className="text-sm font-medium text-white">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm">
+                    <span className="text-sm font-semibold text-white">
                       {user?.email?.charAt(0).toUpperCase() || 'U'}
                     </span>
                   </div>
@@ -198,7 +209,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                   <p className="text-sm font-medium text-white truncate" title={user?.email}>
                     {user?.email}
                   </p>
-                  <p className="text-xs text-gray-400">Administrator</p>
+                  <p className="text-xs text-neutral-400">Administrator</p>
                 </div>
               </>
             )}
@@ -207,13 +218,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <button
                 onClick={handleLogout}
                 className={`
-                  flex-shrink-0 p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-md transition-colors duration-200
-                  focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800
+                  flex-shrink-0 p-2 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded-lg transition-all duration-150
+                  focus:outline-none focus:ring-2 focus:ring-primary-500/20 min-h-[44px] min-w-[44px]
                   ${isCollapsed ? '' : 'ml-3'}
                 `}
                 aria-label="Sign out"
               >
-                <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                <ArrowRightOnRectangleIcon className="w-5 h-5" aria-hidden="true" />
               </button>
             </Tooltip>
           </div>

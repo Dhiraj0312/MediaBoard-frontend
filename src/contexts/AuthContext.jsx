@@ -194,6 +194,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let mounted = true;
     let healthCheckInterval = null;
+    let initTimeout = null;
 
     // Set auth context on apiClient
     apiClient.setAuthContext({
@@ -206,12 +207,22 @@ export function AuthProvider({ children }) {
     // Get initial session
     const getInitialSession = async () => {
       try {
+        console.log('[AuthContext] Getting initial session', {
+          timestamp: new Date().toISOString()
+        });
+
         // Check backend health in background (non-blocking)
         checkBackendHealth().catch(err => {
           console.error('[AuthContext] Background health check failed:', err);
         });
 
         const { data: { session } } = await supabase.auth.getSession();
+        
+        console.log('[AuthContext] Initial session retrieved', {
+          hasSession: !!session,
+          userId: session?.user?.id,
+          timestamp: new Date().toISOString()
+        });
         
         if (mounted) {
           setSession(session);
@@ -220,6 +231,7 @@ export function AuthProvider({ children }) {
           // Load stored token
           const { token } = getStoredAPIToken();
           if (token) {
+            console.log('[AuthContext] Found stored API token');
             setApiToken(token);
           }
           
@@ -239,11 +251,25 @@ export function AuthProvider({ children }) {
         });
       } finally {
         if (mounted) {
+          console.log('[AuthContext] Auth initialization complete', {
+            timestamp: new Date().toISOString()
+          });
           setLoading(false);
           setInitialized(true);
         }
       }
     };
+
+    // Add timeout to prevent infinite loading
+    initTimeout = setTimeout(() => {
+      if (mounted && !initialized) {
+        console.warn('[AuthContext] Auth initialization timeout - forcing completion', {
+          timestamp: new Date().toISOString()
+        });
+        setLoading(false);
+        setInitialized(true);
+      }
+    }, 5000); // 5 second timeout
 
     getInitialSession();
 
@@ -311,6 +337,9 @@ export function AuthProvider({ children }) {
 
     return () => {
       mounted = false;
+      if (initTimeout) {
+        clearTimeout(initTimeout);
+      }
       if (healthCheckInterval) {
         clearInterval(healthCheckInterval);
       }
