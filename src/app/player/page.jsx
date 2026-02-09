@@ -289,6 +289,7 @@ export default function PlayerPage() {
           background: var(--color-primary-500);
           transition: width 0.1s linear;
           z-index: 1000;
+          display: none !important;
         }
 
         .fullscreen-toggle {
@@ -318,8 +319,15 @@ export default function PlayerPage() {
         .fullscreen-mode .status-indicator,
         .fullscreen-mode .network-status,
         .fullscreen-mode .playlist-info,
+        .fullscreen-mode .progress-bar,
         .fullscreen-mode .fullscreen-toggle {
-          display: none;
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+        }
+
+        body.fullscreen-mode #progressBar {
+          display: none !important;
         }
 
         .fade-transition {
